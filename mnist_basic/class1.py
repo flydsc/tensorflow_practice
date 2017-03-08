@@ -26,11 +26,12 @@ mnist = input_data.read_data_sets('MNIST_data', one_hot=True)
 xs = tf.placeholder(tf.float32, [None, 784])
 ys = tf.placeholder(tf.float32, [None, 10])
 
+# first_layer = add_layer(xs, 784, 50, act_fun=tf.nn.relu)
 prediction = add_layer(xs, 784, 10, act_fun=tf.nn.softmax)
 
 cross_entropy = tf.reduce_mean(-tf.reduce_sum(ys * tf.log(prediction), reduction_indices=[1]))
 
-train = tf.train.GradientDescentOptimizer(0.2).minimize(cross_entropy)
+train = tf.train.GradientDescentOptimizer(0.5).minimize(cross_entropy)
 
 init = tf.global_variables_initializer()
 with tf.Session() as sess:
