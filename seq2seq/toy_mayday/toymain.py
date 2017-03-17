@@ -1,16 +1,17 @@
 import numpy as np
 import tensorflow as tf
 import helpers
+import load
 
 
-def next_feed():
-    batch = next(batches)
-    encoder_inputs_, _ = helpers.batch(batch)
+def next_feed(sequences):
+    EOS = 1
+    encoder_inputs_, _ = helpers.batch(sequences)
     decoder_targets_, _ = helpers.batch(
-        [(sequence) + [EOS] for sequence in batch]
+        [(sequence) + [EOS] for sequence in sequences]
     )
     decoder_inputs_, _ = helpers.batch(
-        [[EOS] + (sequence) for sequence in batch]
+        [[EOS] + (sequence) for sequence in sequences]
     )
     return {
         encoder_inputs: encoder_inputs_,
@@ -24,7 +25,7 @@ sess = tf.InteractiveSession()
 PAD = 0
 EOS = 1
 
-vocab_size = 10
+vocab_size = 248
 input_embedding_size = 20
 
 encoder_hidden_units = 20
@@ -74,32 +75,29 @@ sess.run(tf.global_variables_initializer())
 
 batch_size = 100
 
-batches = helpers.random_sequences(length_from=3, length_to=8,
-                                   vocab_lower=2, vocab_upper=10,
-                                   batch_size=batch_size)
-
-print len(next(batches))
+# batches = helpers.random_sequences(length_from=3, length_to=8,
+#                                    vocab_lower=2, vocab_upper=10,
+#                                    batch_size=batch_size)
+#
+# print len(next(batches))
 
 loss_track = []
 max_batches = 3001
 batches_in_epoch = 1000
+b_size = 10
+max_epoch = 1000000
+
+
 
 try:
-    for batch in range(max_batches):
-        fd = next_feed()
+    fd = next_feed(load.seq())
+    for epoch in range(max_epoch):# print('minibatch loss: {}'.format(sess.run(loss, feed_dict={encoder_inputs: encoder_inputs_[ep_idx*10: (ep_idx+1)*10-1], decoder_inputs: decoder_inputs_[ep_idx*10: (ep_idx+1)*10-1], decoder_targets: decoder_targets_[ep_idx*10: (ep_idx+1)*10-1]})))
         _, l = sess.run([train_op, loss], fd)
-        loss_track.append(l)
-
-        if batch == 0 or batch % batches_in_epoch == 0:
-            print('batch {}'.format(batch))
-            print('  minibatch loss: {}'.format(sess.run(loss, fd)))
-            predict_ = sess.run(decoder_prediction, fd)
-            for i, (inp, pred) in enumerate(zip(fd[encoder_inputs].T, predict_.T)):
-                print('  sample {}:'.format(i + 1))
-                print('    input     > {}'.format(inp))
-                print('    predicted > {}'.format(pred))
-                if i >= 2:
-                    break
-            print()
+        if epoch % 1000 == 0:
+            print('loss: {}'.format(sess.run(loss, fd)))
+            testfd = next_feed(load.test())
+            predict_ = sess.run(decoder_prediction, testfd)
+            print load.getch(predict_.T)
 except KeyboardInterrupt:
     print('training interrupted')
+
