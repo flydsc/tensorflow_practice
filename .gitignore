@@ -27,3 +27,5 @@ build.properties
 junit*.properties
 IgnoreLexer.java~
 .gradle
+
+*.tsv
