@@ -138,7 +138,7 @@ def main():
       for i in xrange(TEST):
         state = env.reset()
         for j in xrange(STEP):
-          env.render()
+          # env.render()
           action = agent.action(state) # direct action for test
           state,reward,done,_ = env.step(action)
           total_reward += reward
