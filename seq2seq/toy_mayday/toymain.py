@@ -90,17 +90,20 @@ with tf.Session() as sess:
     b_size = 10
     max_epoch = 1000000
 
+    all_data = load.seq()
 
 
-    try:
-        fd = next_feed(load.seq())
-        for epoch in range(max_epoch):# print('minibatch loss: {}'.format(sess.run(loss, feed_dict={encoder_inputs: encoder_inputs_[ep_idx*10: (ep_idx+1)*10-1], decoder_inputs: decoder_inputs_[ep_idx*10: (ep_idx+1)*10-1], decoder_targets: decoder_targets_[ep_idx*10: (ep_idx+1)*10-1]})))
-            _, l = sess.run([train_op, loss], fd)
-            if epoch % 1000 == 0:
-                print('loss: {}'.format(sess.run(loss, fd)))
-                testfd = next_feed(load.test())
-                predict_ = sess.run(decoder_prediction, testfd)
-                print load.getch(predict_.T)
-    except KeyboardInterrupt:
-        print('training interrupted')
+    for i in range(len(all_data)):
+        try:
+            fd = next_feed(all_data[i: min(len(all_data), i + 10)])
+            for epoch in range(max_epoch):# print('minibatch loss: {}'.format(sess.run(loss, feed_dict={encoder_inputs: encoder_inputs_[ep_idx*10: (ep_idx+1)*10-1], decoder_inputs: decoder_inputs_[ep_idx*10: (ep_idx+1)*10-1], decoder_targets: decoder_targets_[ep_idx*10: (ep_idx+1)*10-1]})))
+                _, l = sess.run([train_op, loss], fd)
+                if epoch % 1000 == 0:
+                    print('loss: {}'.format(sess.run(loss, fd)))
+                    testfd = next_feed(load.test())
+                    predict_ = sess.run(decoder_prediction, testfd)
+                    print load.getch(predict_.T)
+        except KeyboardInterrupt:
+            print('training interrupted')
+        i += 10
 

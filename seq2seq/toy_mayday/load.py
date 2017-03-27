@@ -13,6 +13,7 @@ with codecs.open('dict.txt', 'r', 'utf-8') as infile:
         ch2idx[ch] = int(idx)
     print max(idx2ch)
 
+
 def seq():
     sequences = []
     with codecs.open('data1.txt', 'r', 'utf-8') as infile:
@@ -24,7 +25,7 @@ def seq():
 
 def test():
     sequences = []
-    testline = u"有谁能听见"
+    testline = u"齐铭醒来的时候"
     sequences.append([ch2idx[ch] for ch in testline])
     return sequences
 
