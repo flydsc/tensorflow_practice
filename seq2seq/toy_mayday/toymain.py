@@ -86,16 +86,15 @@ with tf.Session() as sess:
 
     loss_track = []
     max_batches = 3001
-    batches_in_epoch = 1000
+    batches_in_epoch = 100
     b_size = 10
     max_epoch = 1000000
 
     all_data = load.seq()
-
-
-    for i in range(len(all_data)):
+    i = 0
+    while(i < len(all_data)):
         try:
-            fd = next_feed(all_data[i: min(len(all_data), i + 10)])
+            fd = next_feed(all_data[i: min(len(all_data), i + batches_in_epoch)])
             for epoch in range(max_epoch):# print('minibatch loss: {}'.format(sess.run(loss, feed_dict={encoder_inputs: encoder_inputs_[ep_idx*10: (ep_idx+1)*10-1], decoder_inputs: decoder_inputs_[ep_idx*10: (ep_idx+1)*10-1], decoder_targets: decoder_targets_[ep_idx*10: (ep_idx+1)*10-1]})))
                 _, l = sess.run([train_op, loss], fd)
                 if epoch % 1000 == 0:
@@ -105,5 +104,5 @@ with tf.Session() as sess:
                     print load.getch(predict_.T)
         except KeyboardInterrupt:
             print('training interrupted')
-        i += 10
+        i += batches_in_epoch
 
