@@ -25,7 +25,7 @@ sess = tf.InteractiveSession()
 PAD = 0
 EOS = 1
 
-vocab_size = 248
+vocab_size = 2499
 input_embedding_size = 20
 
 encoder_hidden_units = 20
