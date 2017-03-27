@@ -3,6 +3,9 @@ import tensorflow as tf
 import helpers
 import load
 
+config = tf.ConfigProto()
+config.gpu_options.per_process_gpu_memory_fraction = 0.6
+
 
 def next_feed(sequences):
     EOS = 1
