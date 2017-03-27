@@ -20,7 +20,7 @@ def next_feed(sequences):
     }
 
 tf.reset_default_graph()
-sess = tf.InteractiveSession()
+sess = tf.Session()
 
 PAD = 0
 EOS = 1
