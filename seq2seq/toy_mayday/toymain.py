@@ -28,7 +28,7 @@ with tf.Session() as sess:
     PAD = 0
     EOS = 1
 
-    vocab_size = 2499
+    vocab_size = 2498
     input_embedding_size = 20
 
     encoder_hidden_units = 20
