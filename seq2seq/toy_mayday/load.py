@@ -15,7 +15,7 @@ with codecs.open('dict.txt', 'r', 'utf-8') as infile:
 
 def seq():
     sequences = []
-    with codecs.open('data.txt', 'r', 'utf-8') as infile:
+    with codecs.open('data1.txt', 'r', 'utf-8') as infile:
         for line in infile.readlines():
             num_line = [ch2idx[ch] for ch in line.strip().replace(" ", "")]
             sequences.append(num_line)

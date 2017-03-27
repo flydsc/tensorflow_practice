@@ -3,7 +3,7 @@ import codecs
 text = []
 dic = []
 
-with codecs.open('data.txt', 'r', 'utf-8') as infile:
+with codecs.open('data1.txt', 'r', 'utf-8') as infile:
     for line in infile.readlines():
         text += line.replace(" ", "").replace("\n", "|")
 
