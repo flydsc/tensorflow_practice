@@ -66,10 +66,11 @@ with tf.Session() as sess:
         # print np.array(batch_xs).shape
             batch_ys = Y[(step-1) * batch_size : step * batch_size]
         else:
-            print data_len - ((step-1) * batch_size), data_len, data_len - ((step-1) * batch_size)
+            print data_len - ((step-1) * batch_size), batch_size - data_len, data_len - ((step-1) * batch_size)
             batch_xs = data[(step-1) * batch_size :] + data[: batch_size - data_len - ((step-1) * batch_size)]
             batch_ys = Y[(step-1) * batch_size :] + Y[: data_len - ((step-1) * batch_size)]
             step = 0
+            print len(batch_xs)
         b_y = np.array(batch_ys)
         sess.run([train_op], feed_dict={
             x: batch_xs,
