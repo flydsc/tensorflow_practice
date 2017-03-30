@@ -5,7 +5,7 @@ import numpy as np
 labels_n, max_len, data_len, word_size, data, Y = load.loadfile()
 #para
 lr = 0.001
-train_iters = 1000000
+train_iters = 1000000000000000
 batch_size = 128
 
 n_inputs = max_len
@@ -61,9 +61,13 @@ with tf.Session() as sess:
     sess.run(init)
     step = 1
     while step * batch_size < train_iters:
-        batch_xs = data[(step-1) * batch_size : step * batch_size]
+        if step * batch_size <= data_len:
+            batch_xs = data[(step-1) * batch_size : step * batch_size]
         # print np.array(batch_xs).shape
-        batch_ys = Y[(step-1) * batch_size : step * batch_size]
+            batch_ys = Y[(step-1) * batch_size : step * batch_size]
+        else:
+            batch_xs = data[(step-1) * batch_size :] + data[: data_len - (step-1) * batch_size]
+            batch_ys = Y[(step-1) * batch_size :] + Y[: data_len - (step-1) * batch_size]
         b_y = np.array(batch_ys)
         sess.run([train_op], feed_dict={
             x: batch_xs,
