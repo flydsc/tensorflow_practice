@@ -62,7 +62,7 @@ with tf.Session() as sess:
     step = 1
     while step * batch_size < train_iters:
         batch_xs = data[(step-1) * batch_size : step * batch_size]
-        print np.array(batch_xs).shape
+        # print np.array(batch_xs).shape
         batch_ys = Y[(step-1) * batch_size : step * batch_size]
         b_y = np.array(batch_ys)
         sess.run([train_op], feed_dict={
