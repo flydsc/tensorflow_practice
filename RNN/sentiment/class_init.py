@@ -73,7 +73,7 @@ with tf.Session() as sess:
             batch_ys = Y[(step-1) * batch_size :] + Y[:start]
             step = 0
             print len(batch_xs)
-            print len(data[: batch_size - data_len + ((step-1) * batch_size)])
+            print batch_size, start, remain
         b_y = np.array(batch_ys)
         sess.run([train_op], feed_dict={
             x: batch_xs,
