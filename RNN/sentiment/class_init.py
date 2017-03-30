@@ -57,6 +57,7 @@ correct_pred = tf.equal(tf.argmax(pred, 1), tf.argmax(y, 1))
 accuracy = tf.reduce_mean(tf.cast(correct_pred, tf.float32))
 
 with tf.Session() as sess:
+    saver = tf.train.Saver()
     init = tf.global_variables_initializer()
     sess.run(init)
     step = 1
@@ -66,14 +67,11 @@ with tf.Session() as sess:
         # print np.array(batch_xs).shape
             batch_ys = Y[(step-1) * batch_size : step * batch_size]
         else:
-            print data_len - ((step-1) * batch_size), batch_size - data_len, data_len - ((step-1) * batch_size)
             remain = data_len - (step-1) * batch_size
             start = batch_size - remain
             batch_xs = data[(step-1) * batch_size :] + data[:start]
             batch_ys = Y[(step-1) * batch_size :] + Y[:start]
             step = 0
-            print len(batch_xs)
-            print batch_size, start, remain
         b_y = np.array(batch_ys)
         sess.run([train_op], feed_dict={
             x: batch_xs,
@@ -85,4 +83,6 @@ with tf.Session() as sess:
             y: b_y,
         }))
         step += 1
+    save_path = saver.save(sess, "./model.ckpt")
+    print "Model saved in file: ", save_path
 
