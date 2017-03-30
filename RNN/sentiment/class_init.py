@@ -9,7 +9,7 @@ train_iters = 50000
 batch_size = 128
 
 n_inputs = max_len
-n_hidden_units = 1280
+n_hidden_units = 128
 n_classes = labels_n
 
 x = tf.placeholder(tf.int32, [batch_size, n_inputs])
@@ -66,6 +66,7 @@ with tf.Session() as sess:
         # print np.array(batch_xs).shape
             batch_ys = Y[(step-1) * batch_size : step * batch_size]
         else:
+            print data_len - ((step-1) * batch_size)
             batch_xs = data[(step-1) * batch_size :] + data[: data_len - ((step-1) * batch_size)]
             batch_ys = Y[(step-1) * batch_size :] + Y[: data_len - ((step-1) * batch_size)]
             step = 0
