@@ -86,3 +86,4 @@ with tf.Session() as sess:
     save_path = saver.save(sess, "./model.ckpt")
     print "Model saved in file: ", save_path
 
+
