@@ -67,7 +67,7 @@ with tf.Session() as sess:
             batch_ys = Y[(step-1) * batch_size : step * batch_size]
         else:
             print data_len - ((step-1) * batch_size), batch_size - data_len, data_len - ((step-1) * batch_size)
-            remain = (step-1) * batch_size
+            remain = data_len - (step-1) * batch_size
             start = batch_size - remain
             batch_xs = data[(step-1) * batch_size :] + data[:start]
             batch_ys = Y[(step-1) * batch_size :] + Y[:start]
