@@ -51,4 +51,4 @@ def loadfile():
         Y_new.append(t_y)
     return l_n, max_len, len(X_new), len(word2id), X_new, Y_new
 
-print loadfile()[2]
+print loadfile()[1]

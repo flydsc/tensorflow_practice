@@ -29,3 +29,6 @@ IgnoreLexer.java~
 .gradle
 
 *.tsv
+*.meta
+*.index
+*.ckpt.*

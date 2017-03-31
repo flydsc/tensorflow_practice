@@ -15,7 +15,7 @@ def loaddic():
     return word2id, id2word
 
 
-def loadfile():
+def loadfile(max_len):
     word2id, id2word = loaddic()
     X = []
     with open('test.tsv', 'r') as infile:
@@ -28,11 +28,6 @@ def loadfile():
                     X.append(temp[-1].split(" "))
 
     # print len(X), len(Y)
-    max_len = 0
-    for i in X:
-        if len(i) > max_len:
-            max_len = len(i)
-
     X_new = []
     for x in range(len(X)):
         xx = np.zeros(max_len)
@@ -42,7 +37,9 @@ def loadfile():
                 xx[idx] = word2id[w]
             except KeyError, e:
                 xx[idx] = word2id["<UNK>"]
+            except IndexError:
+                pass
         X_new.append(xx)
     return X_new
 
-# print loadfile()[-1][:1]
+# print loadfile(52)[-1][:1]
