@@ -8,7 +8,7 @@ test_data = load_test.loadfile(max_len)
 #para
 lr = 0.001
 train_iters = 40000
-batch_size = 128
+batch_size = 64
 
 
 n_inputs = max_len
