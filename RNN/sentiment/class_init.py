@@ -80,7 +80,7 @@ with tf.Session() as sess:
             y: b_y,
         })
         if step % 200 == 0:
-            print("still left ", float(train_iters - ij) / float(train_iters))
+            print("still left ", (float(train_iters - ij) / float(train_iters)))
             print(sess.run(accuracy, feed_dict={
             x: batch_xs,
             y: b_y,
