@@ -4,10 +4,10 @@ import numpy as np
 import load_test
 # number 1 to 10 data
 labels_n, max_len, data_len, word_size, data, Y = load.loadfile()
-test_data = load_test.loadfile()
+test_data = load_test.loadfile(max_len)
 #para
 lr = 0.001
-train_iters = 50000
+train_iters = 5
 batch_size = 128
 
 n_inputs = max_len
@@ -86,16 +86,17 @@ with tf.Session() as sess:
         step += 1
     save_path = saver.save(sess, "./model.ckpt")
     print "Model saved in file: ", save_path
-    for t in test_data:
-        result.append(
-            sess.run([prediction], feed_dict={
-                x: t
-            })
-        )
-    step = 0
+    # for t in test_data:
+    #     result.append(
+    #         sess.run([prediction], feed_dict={
+    #             x: t
+    #         })
+    #     )
+    step = 1
     test_len = len(test_data)
     while step * batch_size <= data_len:
         batch_xt = test_data[(step-1) * batch_size : step * batch_size]
+        # print np.array(batch_xt).shape
         result.append(sess.run([prediction], feed_dict={x: batch_xt}))
     remain = test_len - (step-1) * batch_size
     start = batch_size - remain
