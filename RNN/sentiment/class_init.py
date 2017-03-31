@@ -47,9 +47,31 @@ def RNN(X, weights, biases):
     results = tf.matmul(final_state[1], weights['out']) + biases['out']
     return results
 
+def RNNN(X, weights, biases):
+    batch_size = 1
+    # hidden layer for input to cell
+    ########################################
+    embedding = tf.get_variable('embedding', [word_size, n_hidden_units])
+    inputs = tf.nn.embedding_lookup(embedding, X)
+    # x_in = tf.matmul(inputs, weights['in']) + biases['in']
+
+    # cell
+    ##########################################
+    lstm_cell = tf.contrib.rnn.BasicLSTMCell(n_hidden_units, forget_bias=1.0, state_is_tuple=True)
+    init_state = lstm_cell.zero_state(batch_size, dtype=tf.float32)
+    outputs, final_state = tf.nn.dynamic_rnn(lstm_cell, inputs, initial_state=init_state, time_major=False)
+
+
+
+    # hidden layer for output as the final results
+    #############################################
+    results = tf.matmul(final_state[1], weights['out']) + biases['out']
+    return results
+
 
 pred = RNN(x, weights, biases)
-prediction = tf.argmax(pred, 1)
+predd = RNNN(x, weights, biases)
+prediction = tf.argmax(predd, 1)
 cost = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(logits=pred, labels=y))
 train_op = tf.train.AdamOptimizer(lr).minimize(cost)
 
