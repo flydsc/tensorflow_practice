@@ -83,6 +83,7 @@ with tf.Session() as sess:
             x: batch_xs,
             y: b_y,
         }))
+            print(sess.run(prediction,  feed_dict={x: batch_xs}))
         step += 1
     save_path = saver.save(sess, "./model.ckpt")
     print "Model saved in file: ", save_path
@@ -92,19 +93,19 @@ with tf.Session() as sess:
     #             x: t
     #         })
     #     )
-    step = 1
-    test_len = len(test_data)
-    while step * batch_size <= test_len:
-        batch_xt = test_data[(step-1) * batch_size : step * batch_size]
-        # print np.array(batch_xt).shape
-        result.append(sess.run([prediction], feed_dict={x: batch_xt}))
-    remain = test_len - (step-1) * batch_size
-    start = batch_size - remain
-    batch_xt = test_len[(step-1) * batch_size :] + test_len[:start]
-    final = sess.run([prediction], feed_dict={x: batch_xt})
-    result.append(final[:remain])
-    with open('result.txt', 'w') as out:
-        for i in result:
-            out.write(str(i) + '\n')
+    # step = 1
+    # test_len = len(test_data)
+    # while step * batch_size <= test_len:
+    #     batch_xt = test_data[(step-1) * batch_size : step * batch_size]
+    #     # print np.array(batch_xt).shape
+    #     result.append(sess.run([prediction], feed_dict={x: batch_xt}))
+    # remain = test_len - (step-1) * batch_size
+    # start = batch_size - remain
+    # batch_xt = test_len[(step-1) * batch_size :] + test_len[:start]
+    # final = sess.run([prediction], feed_dict={x: batch_xt})
+    # result.append(final[:remain])
+    # with open('result.txt', 'w') as out:
+    #     for i in result:
+    #         out.write(str(i) + '\n')
 
 
