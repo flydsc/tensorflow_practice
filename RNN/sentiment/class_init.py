@@ -7,7 +7,7 @@ labels_n, max_len, data_len, word_size, data, Y = load.loadfile()
 test_data = load_test.loadfile(max_len)
 #para
 lr = 0.001
-train_iters = 20
+train_iters = 5000000
 batch_size = 128
 
 n_inputs = max_len
@@ -102,7 +102,8 @@ with tf.Session() as sess:
         # print np.array(batch_xt).shape
         result.append(list(sess.run(prediction, feed_dict={x: batch_xt})))
         step += 1
-        print step * batch_size
+        if (step * batch_size) % 200 == 0:
+            print "test data has been", step * batch_size
     remain = test_len - (step-1) * batch_size
     start = batch_size - remain
     batch_xt = test_data[(step-1) * batch_size :] + test_data[:start]

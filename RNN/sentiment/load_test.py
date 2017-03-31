@@ -42,4 +42,4 @@ def loadfile(max_len):
         X_new.append(xx)
     return X_new
 
-# print loadfile(52)[-1][:1]
+# print len(loadfile(52))
