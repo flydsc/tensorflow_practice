@@ -8,7 +8,8 @@ test_data = load_test.loadfile(max_len)
 #para
 lr = 0.001
 train_iters = 50000
-batch_size = 128
+batch_size = 512
+
 
 n_inputs = max_len
 n_hidden_units = 128
@@ -87,14 +88,6 @@ with tf.Session() as sess:
         step += 1
     save_path = saver.save(sess, "./model.ckpt")
     print "Model saved in file: ", save_path
-    # result += list(sess.run(prediction, feed_dict={x:test_data[:batch_size]}))
-    # print result
-    # for t in test_data:
-    #     result.append(
-    #         sess.run([prediction], feed_dict={
-    #             x: t
-    #         })
-    #     )
     step = 1
     test_len = len(test_data)
     while step * batch_size <= test_len:
