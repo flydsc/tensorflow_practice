@@ -8,11 +8,11 @@ test_data = load_test.loadfile(max_len)
 #para
 lr = 0.001
 train_iters = 40000
-batch_size = 64
+batch_size = 128
 
 
 n_inputs = max_len
-n_hidden_units = 512
+n_hidden_units = 1024
 n_classes = labels_n
 
 x = tf.placeholder(tf.int32, [None, n_inputs])
