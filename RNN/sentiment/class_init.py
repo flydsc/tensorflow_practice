@@ -94,7 +94,7 @@ with tf.Session() as sess:
     #     )
     step = 1
     test_len = len(test_data)
-    while step * batch_size <= data_len:
+    while step * batch_size <= test_len:
         batch_xt = test_data[(step-1) * batch_size : step * batch_size]
         # print np.array(batch_xt).shape
         result.append(sess.run([prediction], feed_dict={x: batch_xt}))
