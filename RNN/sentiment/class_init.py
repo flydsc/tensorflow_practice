@@ -7,7 +7,7 @@ labels_n, max_len, data_len, word_size, data, Y = load.loadfile()
 test_data = load_test.loadfile(max_len)
 #para
 lr = 0.001
-train_iters = 5000000
+train_iters = 50000
 batch_size = 128
 
 n_inputs = max_len
@@ -78,7 +78,7 @@ with tf.Session() as sess:
             x: batch_xs,
             y: b_y,
         })
-        if step % 20 == 0:
+        if step % 200 == 0:
             print(sess.run(accuracy, feed_dict={
             x: batch_xs,
             y: b_y,
