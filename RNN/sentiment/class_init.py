@@ -84,6 +84,7 @@ with tf.Session() as sess:
             y: b_y,
         }))
             print(sess.run(prediction,  feed_dict={x: batch_xs}))
+            print(sess.run(prediction, feed_dict={x:test_data[:batch_size]}))
         step += 1
     save_path = saver.save(sess, "./model.ckpt")
     print "Model saved in file: ", save_path
