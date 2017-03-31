@@ -7,7 +7,7 @@ labels_n, max_len, data_len, word_size, data, Y = load.loadfile()
 test_data = load_test.loadfile(max_len)
 #para
 lr = 0.001
-train_iters = 5
+train_iters = 2000
 batch_size = 128
 
 n_inputs = max_len
